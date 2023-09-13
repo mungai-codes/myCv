@@ -1,7 +1,9 @@
-package com.mungai_codes.mycv.presentation.cvscreen
+package com.mungai_codes.mycv.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mungai_codes.mycv.presentation.cvscreen.CvScreenEvents
+import com.mungai_codes.mycv.presentation.cvscreen.CvScreenUiEvents
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -9,23 +11,25 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CvScreenViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
 
-    private val _state = MutableStateFlow(CvScreenState())
+    private val _state = MutableStateFlow(AppUiState())
     val state = _state.asStateFlow()
 
-    private val _uiEventFlow = MutableSharedFlow<UiEvent>()
+    private val _uiEventFlow = MutableSharedFlow<CvScreenUiEvents>()
     val uiEventFlow = _uiEventFlow.asSharedFlow()
 
-    fun onEvent(cvScreenEvent: CvScreenEvent) {
+    fun onEvent(cvScreenEvent: CvScreenEvents) {
         when (cvScreenEvent) {
-            CvScreenEvent.OnEditCvEvent -> {
-
+            CvScreenEvents.OnEditCvEvent -> {
+                viewModelScope.launch {
+                    _uiEventFlow.emit(CvScreenUiEvents.NavigateToEditCvScreen)
+                }
             }
 
-            is CvScreenEvent.OnSectionClickedEvent -> {
+            is CvScreenEvents.OnSectionClickedEvent -> {
                 viewModelScope.launch {
-                    _uiEventFlow.emit(UiEvent.ExpandSection(cvScreenEvent.section))
+                    _uiEventFlow.emit(CvScreenUiEvents.ExpandSection(cvScreenEvent.section))
                 }
             }
         }
@@ -35,7 +39,7 @@ class CvScreenViewModel : ViewModel() {
         _state.update { it.copy(expandBioSection = !_state.value.expandBioSection) }
     }
 
-    fun updateWorkExperienceoSection() {
+    fun updateWorkExperienceSection() {
         _state.update { it.copy(expandWorkExperienceSection = !_state.value.expandWorkExperienceSection) }
     }
 

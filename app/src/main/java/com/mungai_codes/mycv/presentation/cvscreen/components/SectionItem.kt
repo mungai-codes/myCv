@@ -45,7 +45,7 @@ fun SectionItem(
             modifier = Modifier
                 .clickable { onClick() },
             shape = MaterialTheme.shapes.medium,
-            color = MaterialTheme.colorScheme.primaryContainer
+            color = if (expanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primaryContainer
         ) {
             Box(
                 modifier = Modifier
@@ -69,13 +69,7 @@ fun SectionItem(
             }
         }
         AnimatedVisibility(visible = expanded) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colorScheme.primaryContainer
-            ) {
-                content()
-            }
+            content()
         }
     }
 }
