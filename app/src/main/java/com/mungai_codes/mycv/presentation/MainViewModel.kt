@@ -2,7 +2,9 @@ package com.mungai_codes.mycv.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mungai_codes.mycv.domain.model.Education
 import com.mungai_codes.mycv.domain.model.PersonalInfo
+import com.mungai_codes.mycv.domain.model.Skill
 import com.mungai_codes.mycv.domain.model.Work
 import com.mungai_codes.mycv.presentation.cvscreen.CvScreenEvents
 import com.mungai_codes.mycv.presentation.cvscreen.CvScreenUiEvents
@@ -59,7 +61,11 @@ class MainViewModel : ViewModel() {
             }
 
             is EditScreenEvents.EditSkillsEvent -> {
+                updateSkill(editScreenEvent.skillName, editScreenEvent.skill)
+            }
 
+            is EditScreenEvents.EditEducationEvent -> {
+                updateEducation(editScreenEvent.institution, editScreenEvent.education)
             }
         }
     }
@@ -75,28 +81,39 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun editSkill(index: Int) {
-
-    }
-
-    private fun editWork(
-        organisation: String,
-        from: String,
-        to: String,
-        role: String,
-        description: String
-    ) {
+    private fun updateEducation(institution: String, updatedEducation: Education) {
         _state.update { currentState ->
-            val updatedWorkExperience = currentState.workExperience.map { work ->
-                if (work.organisation == organisation) {
-                    // If the organisation matches, update the properties
-                    work.copy(from = from, to = to, role = role, description = description)
+            val updatedEducationCredentials = currentState.education.map { education ->
+                if (education.institution == institution) {
+                    education.copy(
+                        institution = updatedEducation.institution,
+                        from = updatedEducation.from,
+                        to = updatedEducation.to,
+                        qualification = updatedEducation.qualification,
+                        grade = updatedEducation.grade
+                    )
                 } else {
-                    // Otherwise, keep the work object unchanged
-                    work
+                    education
                 }
             }
-            currentState.copy(workExperience = updatedWorkExperience)
+            currentState.copy(education = updatedEducationCredentials)
+        }
+    }
+
+
+    private fun updateSkill(skillName: String, updatedSkill: Skill) {
+        _state.update { currentState ->
+            val updatedSkills = currentState.skills.map { skill ->
+                if (skill.skillName == skillName) {
+                    skill.copy(
+                        skillName = updatedSkill.skillName,
+                        description = updatedSkill.description
+                    )
+                } else {
+                    skill
+                }
+            }
+            currentState.copy(skills = updatedSkills)
         }
     }
 

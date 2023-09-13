@@ -43,10 +43,10 @@ data class AppUiState(
         ),
     ),
     val skills: List<Skill> = listOf(
-        Skill(skill = "Android App Development", description = "kotlin/java"),
-        Skill(skill = "Version Control ", description = "Git"),
-        Skill(skill = "Problem Solving"),
-        Skill(skill = "Clean Architecture", description = "MVVM")
+        Skill(skillName = "Android App Development", description = "kotlin/java"),
+        Skill(skillName = "Version Control ", description = "Git"),
+        Skill(skillName = "Problem Solving"),
+        Skill(skillName = "Clean Architecture", description = "MVVM")
     ),
     val socials: List<Social> = listOf(
         Social(name = "Slack", icon = R.drawable.ic_slack, handle = "Moses Mungai"),

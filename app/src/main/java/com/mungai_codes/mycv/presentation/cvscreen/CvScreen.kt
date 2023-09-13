@@ -205,7 +205,7 @@ fun CvScreenContent(state: AppUiState, onEvent: (CvScreenEvents) -> Unit) {
                                         )
                                         Row(verticalAlignment = Alignment.CenterVertically) {
                                             Text(
-                                                text = skill.skill,
+                                                text = skill.skillName,
                                                 fontFamily = FontFamily.Serif,
                                                 fontSize = 12.sp
                                             )
