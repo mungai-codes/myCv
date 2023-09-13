@@ -34,7 +34,6 @@ import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.mungai_codes.mycv.R
 import com.mungai_codes.mycv.presentation.AppUiState
@@ -47,31 +46,31 @@ import com.mungai_codes.mycv.presentation.util.Section
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun CvScreen(navController: NavController, viewModel: MainViewModel = viewModel()) {
+fun CvScreen(navController: NavController, viewModel: MainViewModel) {
 
     LaunchedEffect(key1 = true) {
-        viewModel.uiEventFlow.collectLatest { event ->
+        viewModel.cvScreenUiEventsSharedFlow.collectLatest { event ->
             when (event) {
                 is CvScreenUiEvents.ExpandSection -> {
                     when (event.section) {
                         Section.BioSection -> {
-                            viewModel.updateBioSection()
+                            viewModel.toggleBioSection()
                         }
 
                         Section.EducationSection -> {
-                            viewModel.updateEducationSection()
+                            viewModel.toggleEducationSection()
                         }
 
                         Section.SkillsSection -> {
-                            viewModel.updateSkillsSection()
+                            viewModel.toggleSkillsSection()
                         }
 
                         Section.SocialsSection -> {
-                            viewModel.updateSocialsSection()
+                            viewModel.toggleSocialsSection()
                         }
 
                         Section.WorkExperienceSection -> {
-                            viewModel.updateWorkExperienceSection()
+                            viewModel.toggleWorkExperienceSection()
                         }
                     }
                 }
@@ -85,7 +84,7 @@ fun CvScreen(navController: NavController, viewModel: MainViewModel = viewModel(
 
     CvScreenContent(
         state = viewModel.state.collectAsState().value,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onCvScreenEvent
     )
 }
 

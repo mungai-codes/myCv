@@ -34,14 +34,14 @@ fun WorkItem(work: Work, modifier: Modifier = Modifier) {
             Text(
                 text = "from : ${work.from}",
                 fontStyle = FontStyle.Italic,
-                fontWeight = FontWeight.ExtraLight,
+                fontWeight = FontWeight.Light,
                 fontSize = 12.sp
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "to : ${work.to}",
                 fontStyle = FontStyle.Italic,
-                fontWeight = FontWeight.ExtraLight,
+                fontWeight = FontWeight.Light,
                 fontSize = 12.sp
             )
         }

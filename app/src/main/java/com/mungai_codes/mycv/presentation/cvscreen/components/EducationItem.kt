@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,14 +37,14 @@ fun EducationItem(education: Education, modifier: Modifier = Modifier) {
             Text(
                 text = "from : ${education.from}",
                 fontStyle = FontStyle.Italic,
-                fontWeight = FontWeight.ExtraLight,
+                fontWeight = FontWeight.Light,
                 fontSize = 12.sp
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "to : ${education.to}",
                 fontStyle = FontStyle.Italic,
-                fontWeight = FontWeight.ExtraLight,
+                fontWeight = FontWeight.Light,
                 fontSize = 12.sp
             )
         }
@@ -58,7 +59,8 @@ fun EducationItem(education: Education, modifier: Modifier = Modifier) {
             )
             Text(
                 text = education.grade,
-                fontFamily = FontFamily.Serif, fontSize = 14.sp
+                fontFamily = FontFamily.Serif, fontSize = 14.sp,
+                textAlign = TextAlign.Start
             )
         }
     }
