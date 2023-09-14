@@ -1,4 +1,4 @@
-package com.mungai_codes.mycv.presentation
+package com.mungai_codes.mycv.presentation.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

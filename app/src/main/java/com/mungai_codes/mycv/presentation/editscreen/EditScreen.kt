@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mungai_codes.mycv.R
-import com.mungai_codes.mycv.presentation.AppUiState
-import com.mungai_codes.mycv.presentation.MainViewModel
+import com.mungai_codes.mycv.presentation.common.AppUiState
+import com.mungai_codes.mycv.presentation.common.MainViewModel
 import com.mungai_codes.mycv.presentation.editscreen.components.BioEditItem
 import com.mungai_codes.mycv.presentation.editscreen.components.EditEducationItem
 import com.mungai_codes.mycv.presentation.editscreen.components.EditSkillItem

@@ -1,4 +1,4 @@
-package com.mungai_codes.mycv.presentation
+package com.mungai_codes.mycv.presentation.common
 
 import com.mungai_codes.mycv.R
 import com.mungai_codes.mycv.domain.model.Education

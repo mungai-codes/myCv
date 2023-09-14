@@ -1,4 +1,4 @@
-package com.mungai_codes.mycv.presentation
+package com.mungai_codes.mycv.presentation.common
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
