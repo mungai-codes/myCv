@@ -19,6 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.mungai_codes.mycv.domain.model.Skill
@@ -29,10 +31,10 @@ fun EditSkillItem(
     onSkillUpdated: (Skill) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     var editedSkill by remember {
         mutableStateOf(skill)
     }
+    val focusManager = LocalFocusManager.current
 
     Row(
         modifier = modifier,
@@ -49,20 +51,25 @@ fun EditSkillItem(
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
             BasicTextField(
-                value = skill.skillName,
+                value = editedSkill.skillName,
                 onValueChange = { editedSkill = editedSkill.copy(skillName = it) },
                 keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next
+                    imeAction = if (editedSkill.description != null) ImeAction.Next else ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(
                     onNext = {
                         onSkillUpdated(editedSkill)
+                        focusManager.moveFocus(FocusDirection.Right)
+                    },
+                    onDone = {
+                        onSkillUpdated(editedSkill)
+                        focusManager.clearFocus()
                     }
                 ),
                 modifier = Modifier
             )
             Spacer(modifier = Modifier.width(2.dp))
-            skill.description?.let { desc ->
+            editedSkill.description?.let { desc ->
                 BasicTextField(
                     value = desc,
                     onValueChange = { editedSkill = editedSkill.copy(description = it) },
@@ -72,6 +79,7 @@ fun EditSkillItem(
                     keyboardActions = KeyboardActions(
                         onDone = {
                             onSkillUpdated(editedSkill)
+                            focusManager.clearFocus()
                         }
                     ),
                     modifier = Modifier

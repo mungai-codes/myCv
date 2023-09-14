@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -22,16 +21,16 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.mungai_codes.mycv.domain.model.Education
+import com.mungai_codes.mycv.domain.model.WorkExperience
 
 @Composable
-fun EditEducationItem(
-    education: Education,
-    onEducationUpdate: (Education) -> Unit,
-    modifier: Modifier = Modifier
+fun EditWorkExperienceItem(
+    workExperience: WorkExperience,
+    onWorkExperienceUpdate: (WorkExperience) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    var editedEducation by remember {
-        mutableStateOf(education)
+    var editedWorkExperience by remember {
+        mutableStateOf(workExperience)
     }
     val focusManager = LocalFocusManager.current
 
@@ -42,22 +41,19 @@ fun EditEducationItem(
         shape = MaterialTheme.shapes.medium
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(2.dp)
+            modifier = Modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             BasicTextField(
-                value = editedEducation.institution,
+                value = editedWorkExperience.organisation,
                 onValueChange = {
-                    editedEducation = editedEducation.copy(institution = it)
+                    editedWorkExperience = editedWorkExperience.copy(organisation = it)
                 },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(
                     onNext = {
-                        onEducationUpdate(editedEducation)
+                        onWorkExperienceUpdate(editedWorkExperience)
                         focusManager.moveFocus(FocusDirection.Down)
                     }
                 ),
@@ -68,76 +64,71 @@ fun EditEducationItem(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 BasicTextField(
-                    value = editedEducation.from,
+                    value = editedWorkExperience.from,
                     onValueChange = {
-                        editedEducation = editedEducation.copy(from = it)
+                        editedWorkExperience = editedWorkExperience.copy(from = it)
                     },
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
                     ),
                     keyboardActions = KeyboardActions(
                         onNext = {
-                            onEducationUpdate(editedEducation)
+                            onWorkExperienceUpdate(editedWorkExperience)
                             focusManager.moveFocus(FocusDirection.Right)
                         }
                     ),
                     modifier = Modifier
                 )
                 BasicTextField(
-                    value = editedEducation.to,
+                    value = editedWorkExperience.to,
                     onValueChange = {
-                        editedEducation = editedEducation.copy(to = it)
+                        editedWorkExperience = editedWorkExperience.copy(to = it)
                     },
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
                     ),
                     keyboardActions = KeyboardActions(
                         onNext = {
-                            onEducationUpdate(editedEducation)
+                            onWorkExperienceUpdate(editedWorkExperience)
                             focusManager.moveFocus(FocusDirection.Down)
                         }
                     ),
                     modifier = Modifier
                 )
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                BasicTextField(
-                    value = editedEducation.qualification,
-                    onValueChange = {
-                        editedEducation = editedEducation.copy(qualification = it)
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onNext = {
-                            onEducationUpdate(editedEducation)
-                            focusManager.moveFocus(FocusDirection.Right)
-                        }
-                    ),
-                    modifier = Modifier
-                )
-                BasicTextField(
-                    value = editedEducation.grade,
-                    onValueChange = {
-                        editedEducation = editedEducation.copy(grade = it)
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            onEducationUpdate(editedEducation)
-                            focusManager.clearFocus()
-                        }
-                    ),
-                    modifier = Modifier
-                )
-            }
+            BasicTextField(
+                value = editedWorkExperience.role,
+                onValueChange = {
+                    editedWorkExperience = editedWorkExperience.copy(role = it)
+                },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        onWorkExperienceUpdate(editedWorkExperience)
+                        focusManager.moveFocus(FocusDirection.Down)
+                    }
+                ),
+                modifier = Modifier
+            )
+            BasicTextField(
+                value = editedWorkExperience.description,
+                onValueChange = {
+                    editedWorkExperience = editedWorkExperience.copy(description = it)
+                },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        onWorkExperienceUpdate(editedWorkExperience)
+                        focusManager.clearFocus()
+                    }
+                ),
+                modifier = Modifier
+            )
+
         }
     }
 

@@ -1,7 +1,10 @@
 package com.mungai_codes.mycv.presentation.editscreen
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,12 +18,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineBreak
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mungai_codes.mycv.R
 import com.mungai_codes.mycv.presentation.AppUiState
@@ -28,6 +36,8 @@ import com.mungai_codes.mycv.presentation.MainViewModel
 import com.mungai_codes.mycv.presentation.editscreen.components.BioEditItem
 import com.mungai_codes.mycv.presentation.editscreen.components.EditEducationItem
 import com.mungai_codes.mycv.presentation.editscreen.components.EditSkillItem
+import com.mungai_codes.mycv.presentation.editscreen.components.EditSocialItem
+import com.mungai_codes.mycv.presentation.editscreen.components.EditWorkExperienceItem
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -52,12 +62,32 @@ fun EditScreen(
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EditScreenContent(
     state: AppUiState,
     onEvent: (EditScreenEvents) -> Unit
 ) {
     Scaffold(
+        topBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, top = 16.dp, end = 16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Edit Your CV details",
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif,
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(
+                        lineBreak = LineBreak.Heading
+                    )
+                )
+            }
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = { onEvent(EditScreenEvents.OnDoneEditingEvent) }) {
                 Icon(
@@ -79,6 +109,7 @@ fun EditScreenContent(
             contentPadding = PaddingValues(vertical = 16.dp, horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+
             item {
                 BioEditItem(
                     label = "Edit your bio",
@@ -94,48 +125,120 @@ fun EditScreenContent(
 
             item {
                 Column {
-                    state.education.forEach { education ->
-                        EditEducationItem(
-                            education = education,
-                            onEducationUpdated = { updatedEducation ->
-                                onEvent(
-                                    EditScreenEvents.EditEducationEvent(
-                                        institution = education.institution,
-                                        education = updatedEducation
-                                    )
-                                )
-                            }
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = "Edit work experience", fontWeight = FontWeight.Light,
+                            fontStyle = FontStyle.Italic,
+                            fontFamily = FontFamily.Serif
                         )
+                        state.workExperience.forEach { workExperience ->
+                            EditWorkExperienceItem(
+                                workExperience = workExperience,
+                                onWorkExperienceUpdate = { editedWorkExperience ->
+                                    onEvent(
+                                        EditScreenEvents.EditWorkExperienceEvent(
+                                            organisation = editedWorkExperience.organisation,
+                                            workExperience = editedWorkExperience
+                                        )
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
             }
 
             item {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Text(
-                        text = "Edit skill",
-                        fontWeight = FontWeight.Light,
-                        fontStyle = FontStyle.Italic,
-                        fontFamily = FontFamily.Serif
-                    )
-                    state.skills.forEach { skill ->
-                        EditSkillItem(
-                            skill = skill,
-                            onSkillUpdated = { updatedSkill ->
-                                onEvent(
-                                    EditScreenEvents.EditSkillsEvent(
-                                        skillName = skill.skillName,
-                                        skill = updatedSkill
-                                    )
-                                )
-                            }
+                Column {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = "Edit education", fontWeight = FontWeight.Light,
+                            fontStyle = FontStyle.Italic,
+                            fontFamily = FontFamily.Serif
                         )
+                        state.education.forEach { education ->
+                            EditEducationItem(education = education,
+                                onEducationUpdate = { editedEducation ->
+                                    onEvent(
+                                        EditScreenEvents.EditEducationEvent(
+                                            institution = education.institution,
+                                            education = editedEducation
+                                        )
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
             }
+
+            item {
+                Column {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = "Edit skills", fontWeight = FontWeight.Light,
+                            fontStyle = FontStyle.Italic,
+                            fontFamily = FontFamily.Serif
+                        )
+                        state.skills.forEach { skill ->
+                            EditSkillItem(
+                                skill = skill,
+                                onSkillUpdated = { editedSkill ->
+                                    onEvent(
+                                        EditScreenEvents.EditSkillsEvent(
+                                            skillName = skill.skillName,
+                                            skill = editedSkill
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+
+            item {
+                Column {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = "Edit social handles", fontWeight = FontWeight.Light,
+                            fontStyle = FontStyle.Italic,
+                            fontFamily = FontFamily.Serif
+                        )
+                        FlowRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            state.socials.forEach { social ->
+                                EditSocialItem(
+                                    social = social,
+                                    onSocialUpdate = { editedSocial ->
+                                        onEvent(
+                                            EditScreenEvents.EditSocialEvent(
+                                                name = social.name,
+                                                social = editedSocial
+                                            )
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     }
 }

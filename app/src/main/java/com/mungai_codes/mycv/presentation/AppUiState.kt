@@ -5,7 +5,7 @@ import com.mungai_codes.mycv.domain.model.Education
 import com.mungai_codes.mycv.domain.model.PersonalInfo
 import com.mungai_codes.mycv.domain.model.Skill
 import com.mungai_codes.mycv.domain.model.Social
-import com.mungai_codes.mycv.domain.model.Work
+import com.mungai_codes.mycv.domain.model.WorkExperience
 
 data class AppUiState(
     val expandBioSection: Boolean = true,
@@ -17,8 +17,8 @@ data class AppUiState(
         fullName = "Moses Mungai Kabea",
         bio = "A dedicated and highly skilled Android Developer experienced in designing, developing, and maintaining cutting-edge Android applications. Adept at collaborating with cross-functional teams to deliver high-quality, user-friendly mobile solutions. Proficient in Java, Kotlin, and the latest Android technologies, with a passion for staying updated on industry trends."
     ),
-    val workExperience: List<Work> = listOf(
-        Work(
+    val workExperience: List<WorkExperience> = listOf(
+        WorkExperience(
             from = "sept 2022",
             to = "dec 2022",
             organisation = "Mt Kenya University",

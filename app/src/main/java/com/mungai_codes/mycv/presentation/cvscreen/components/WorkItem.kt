@@ -20,11 +20,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mungai_codes.mycv.domain.model.Work
+import com.mungai_codes.mycv.domain.model.WorkExperience
 import com.mungai_codes.mycv.presentation.theme.MyCVTheme
 
 @Composable
-fun WorkItem(work: Work, modifier: Modifier = Modifier) {
+fun WorkItem(work: WorkExperience, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(2.dp)
@@ -64,7 +64,7 @@ fun WorkItemPreview() {
             verticalArrangement = Arrangement.Center
         ) {
             WorkItem(
-                work = Work(
+                work = WorkExperience(
                     from = "sept 2022",
                     to = "dec 2022",
                     organisation = "Mt Kenya University",

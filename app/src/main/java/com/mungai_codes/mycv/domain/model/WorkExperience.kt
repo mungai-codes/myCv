@@ -1,6 +1,6 @@
 package com.mungai_codes.mycv.domain.model
 
-data class Work(
+data class WorkExperience(
     val from: String,
     val to: String,
     val organisation: String,
